@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"> <!-- Disable zooming on mobile devices -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Set your favicon.ico file -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png"> <!-- Set your apple-touch-icon.png file for iOS devices -->
+    <title>Webpage</title>
+
+    {% load static %}
+    <style>
+        /* Common styles for all screen sizes */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #fff;
+            z-index: 1000;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -6px #222; /* Optional: Add a subtle shadow */
+        }
+
+        .logo-container {
+            position: relative;
+            align-items: center;
+        }
+
+        .logo {
+            max-width: 30px; /* Adjusted size for smaller screens */
+            max-height: 25px; /* Adjusted size for smaller screens */
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-left: 300px;
+            margin-top: 19px;
+        }
+
+        .logo:hover {
+            background-color: green;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            display: none;
+        }
+
+        .dropdown-item {
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-bottom: 1px solid #ccc;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background-color: #e0e0e0;
+        }
+
+        .upload {
+            align-self: flex-end;
+            margin-right: 80px;
+            max-width: 30px; /* Adjusted size for smaller screens */
+            max-height: 30px; /* Adjusted size for smaller screens */
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .upload img {
+            max-width: 100%;
+            border-radius: 8px; /* Optional: Add border-radius for rounded corners */
+        }
+
+        .upload button {
+            background-color: black;
+            color: white;
+            padding: 5px; /* Adjusted padding */
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .upload button:hover {
+            background-color: #333; /* Adjusted hover color */
+        }
+
+        .upload-dropdown {
+            position: absolute;
+            top: 40px; /* Adjusted position */
+            right: -10px; /* Adjusted position */
+            background-color: #fff;
+            border: 1px solid #ccc;
+            display: none;
+            width: 220px; /* Adjusted width */
+            padding: 10px; /* Adjusted padding */
+            border-radius: 5px; /* Added border-radius */
+            box-shadow: 0 4px 6px -6px #222; /* Optional: Add a subtle shadow */
+            z-index: 1000;
+        }
+
+        .upload-dropdown input[type="file"] {
+            margin-top: 10px;
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .upload-dropdown textarea {
+            margin-top: 10px;
+            width: 100%; /* Adjusted width */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: none;
+            box-sizing: border-box; /* Include padding and border in the total width */
+            max-width: 100%;
+            height: 80px; /* Set a fixed height */
+            overflow-y: auto; /* Enable vertical scroll if content exceeds the height */
+        }
+
+        .upload-dropdown button {
+            margin-top: 10px;
+            background-color: black;
+            color: white;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .upload-dropdown button:hover {
+            background-color: #333; /* Adjusted hover color */
+        }
+
+        /* Add a margin to the body to avoid content overlapping with the fixed header */
+        body {
+            margin-top: 70px; /* Adjust based on the header height */
+        }
+
+        .image-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .image-card {
+            flex: 1; /* Each card takes equal width */
+            max-width: 800px; /* Adjusted max-width for each card */
+            text-align: center;
+            margin: 10px;
+            box-sizing: border-box; /* Include padding and border in the total width */
+        }
+
+        .image-card img {
+            max-width: 100%;
+            height: auto; /* Maintain original aspect ratio */
+            border-radius: 8px;
+        }
+
+        .image-card p {
+            max-height: 80px; /* Adjusted max-height for the description box */
+            overflow: hidden; /* Hide overflow text beyond the specified height */
+            text-overflow: ellipsis; /* Show ellipsis for text overflow */
+            margin: 10px 0; /* Adjusted margin for spacing */
+        }
+
+        .comment-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .comment-box {
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            margin-left: 10px; /* Adjust margin as needed */
+            max-width: 10px; /* Set a fixed maximum width */
+            max-height: 10px; /* Set a fixed height */
+            overflow-y: auto; /* Enable vertical scroll if content exceeds the height */
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        /* Responsive styles for smaller screens */
+        @media screen and (max-width: 600px) {
+            .logo {
+                max-width: 30px; /* Adjusted size for smaller screens */
+                max-height: 35px; /* Adjusted size for smaller screens */
+                margin-left: 10px;
+            }
+
+            .upload {
+                max-width: 30px; /* Adjusted size for smaller screens */
+                max-height: 30px; /* Adjusted size for smaller screens */
+                margin-right: 10px;
+            }
+
+            .upload-dropdown {
+                top: 40px;
+                right: 10px;
+            }
+
+            .image-section {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .image-card {
+                max-width: 100%; /* Adjusted max-width for smaller screens */
+            }
+
+            .comment-box {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <h1 style="font-size: 16px; color: #333;">Welcome to Planet X</h1>
+
+        <div class="logo-container">
+            <img src="{% static 'images/logo1.png' %}" alt="Logo" class="logo" onclick="toggleDropdown('logo')">
+            <div class="dropdown" id="dropdown">
+                <div class="dropdown-item" onclick="logout()">LogOut</div>
+            </div>
+        </div>
+
+        <div class="upload">
+            <img src="{% static 'images/next.png' %}" alt="upload" class="upload" onclick="toggleUploadDropdown()">
+
+            <div class="upload-dropdown" id="uploadDropdown">
+                <input type="file" accept="image/*" onchange="uploadImage(this)">
+                <textarea id="descriptionInput" placeholder="Describe the image... (max 500 characters)"></textarea>
+                <button onclick="submitImage()">Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Section -->
+    <div class="image-section" id="imageUploadSection">
+        <!-- Your existing image cards will be dynamically added here -->
+    </div>
+
+    <!-- Comment Section -->
+    <div class="comment-section" id="commentSection">
+        <h2></h2>
+        <!-- Add comment display logic here -->
+    </div>
+
+    
+
+    <script>
+        function toggleDropdown(element) {
+            var dropdown = document.getElementById('dropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+            var logoutItem = document.querySelector('.dropdown-item');
+            logoutItem.setAttribute('onclick', `logout('${element}')`);
+        }
+
+        function logout(element) {
+            if (element === 'logo') {
+                console.log('Logout from logo');
+            }
+            window.location.href = "{% url 'home' %}";
+        }
+
+        function toggleUploadDropdown() {
+            var uploadDropdown = document.getElementById('uploadDropdown');
+            uploadDropdown.style.display = uploadDropdown.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function closeUploadDropdown() {
+            var uploadDropdown = document.getElementById('uploadDropdown');
+            uploadDropdown.style.display = 'none';
+        }
+
+        var selectedFile; // Variable to store the selected file globally
+
+        function uploadImage(input) {
+            selectedFile = input.files[0];
+        }
+
+        function submitImage() {
+            var descriptionInput = document.getElementById('descriptionInput');
+            var description = descriptionInput.value.trim();
+
+            // Check if both image and description are provided
+            if (!selectedFile || description === "") {
+                alert("Please provide both an image and a description.");
+                return;
+            }
+
+            // Limit description to 500 characters
+            description = description.slice(0, 500);
+
+            // Perform the image upload and description storage logic here
+
+            console.log("Image uploaded:", selectedFile);
+            console.log("Description:", description);
+
+            // Example: Dynamically create image card and append it to the image section
+            var imageSection = document.getElementById('imageUploadSection');
+            var imageCard = document.createElement('div');
+            imageCard.classList.add('image-card');
+
+            var img = document.createElement('img');
+            img.src = URL.createObjectURL(selectedFile);
+            img.alt = 'Uploaded Image';
+
+            var p = document.createElement('p');
+            p.textContent = description;
+            
+            imageCard.appendChild(img);
+            imageCard.appendChild(p);
+            imageSection.appendChild(imageCard);
+
+            // Display the comment below each image
+            var commentSection = document.getElementById('commentSection');
+            var comment = document.createElement('p');
+            comment.textContent = description;
+
+            // Clear the textarea after uploading
+            descriptionInput.value = "";
+
+            // Close the upload dropdown
+            closeUploadDropdown();
+        }
+    </script>
+</body>
+</html>

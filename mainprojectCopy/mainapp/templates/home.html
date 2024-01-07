@@ -1,0 +1,97 @@
+<!-- home.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    {% load static %}
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* Center content vertically */
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px; /* Add padding to the body for spacing */
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px; /* Adjust the margin from the top */
+        }
+
+        .login-form {
+            width: 300px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        input:hover {
+        border: 1px solid black; /* Change border color on hover */
+            }
+
+
+        .login-button {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        .sign_up {
+            background-color: green;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .login-button:hover {
+            background-color: darkgreen; /* Change color on hover */
+        }
+
+        .forget-password,
+        .sign_up {
+            margin-top: 10px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .sign_up:hover {
+            color:black; /* Change color on hover */
+        }
+        .forget-password:hover
+        {
+            color:blue;
+
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Planet X</h1>
+
+    <!-- Login Form -->
+    <div class="login-form">
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            
+            <button class="login-button" type="submit">Log In</button>
+        </form>
+    </div>
+
+    <!-- Forget Password and Sign Up Links -->
+    <a class="forget-password" href="{% url 'forget_password' %}">Forgot Password ?</a>
+    <a class="sign_up" href="{% url 'sign_up' %}">Create new account</a>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!-- sign_in.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    {% load static %}
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+    
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+    
+        .sign_in-form {
+            width: 300px;
+            text-align: center;
+        }
+    
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+        input:hover {
+        border: 1px solid black; /* Change border color on hover */
+            }
+
+    
+        .sign_in-button {
+            background-color: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+        }
+    
+        .sign_in-button:hover {
+            background-color: darkgreen;
+        }
+    
+        .sign_in-link {
+            margin-top: 10px;
+            text-align: center; /* Center the text horizontally */
+        }
+    
+        .forget-password-link {
+            text-decoration: none;
+            color: black;
+        }
+    
+        .sign_in-link:hover,
+
+        .forget-password-link:hover {
+            background-color: greenyellow;
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const emailInput = document.querySelector('input[name="username"]');
+            const passwordInput = document.querySelector('input[name="password"]');
+            const confirmPasswordInput = document.querySelector('input[name="confirm_password"]');
+            const messageContainer = document.createElement('div');
+            messageContainer.style.color = 'red';
+
+            emailInput.addEventListener('input', function () {
+                const email = emailInput.value;
+                if (!isValidEmail(email)) {
+                    messageContainer.textContent = 'Incorrect email';
+                    emailInput.setCustomValidity('Incorrect email');
+                } else {
+                    messageContainer.textContent = '';
+                    emailInput.setCustomValidity('');
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+            confirmPasswordInput.addEventListener('input', function () {
+                const password = passwordInput.value;
+                const confirmPassword = confirmPasswordInput.value;
+
+                if (password !== confirmPassword) {
+                    messageContainer.textContent = 'Passwords do not match';
+                    confirmPasswordInput.setCustomValidity('Passwords do not match');
+                } else {
+                    messageContainer.textContent = '';
+                    confirmPasswordInput.setCustomValidity('');
+                }
+            });
+            
+
+            document.querySelector('.sign_in-form').appendChild(messageContainer);
+
+            function isValidEmail(email) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return emailRegex.test(email);
+            }
+        });
+    </script>
+</head>
+<body>
+    <h1>Planet X</h1>
+
+
+
+
+    <!-- Signin Form -->
+    <div class="sign_in-form">
+        <form action="{% url 'sign_in' %}" method="post">
+            {% csrf_token %}
+
+           
+
+            {{ form.as_p }}
+            <input type="text" name="username" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required pattern="(?=(.*\d){2,}).{5,}" title="Password must be at least 5 characters long and contain at least 2 numbers">
+
+           <!--  <input type="password" name="password" placeholder="Password" required>  -->
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <button class="sign_in-button" type="submit">Sign In</button>
+        </form>
+
+
+
+
+        <!-- Sign In link below Confirm Password -->
+        <div class="sign_in-link">
+            {% if user_signed_in %}
+                <p>You have successfully signed in. You can now log in.</p>
+                <a class="login-link" href="{% url 'sign_in' %}">Sign In</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

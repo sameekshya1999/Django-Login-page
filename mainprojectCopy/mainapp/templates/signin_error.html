@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error to Sign Up</title>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column; /* Align items vertically */
+        }
+
+        p {
+            color: green;
+            text-align: center;
+        }
+
+        form {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 10px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Your existing HTML content goes here -->
+
+<!-- Display success message in green -->
+<p>Your account already exists. Please log in.</p>
+
+<!-- Add a line break and a button to redirect to the home page -->
+<br>
+<form action="{% url 'home' %}" method="get">
+    <button type="submit">Go Home</button>
+</form>
+
+<!-- Continue with your HTML content -->
+
+</body>
+</html>
